@@ -4,54 +4,67 @@
 let allViews = document.querySelectorAll(".view")
 let booksTable = document.querySelector("#books-table");
 let sportTable = document.querySelector("#sport-table");
-let continentsTable = document.querySelector(".continents-table")
+let continentsTable = document.querySelector("#continents-table")
 let booksBtn = document.querySelector(".books-btn")
 let sportsBtn = document.querySelector(".sports-btn")
 let continentsBtn = document.querySelector(".continents-btn")
+let gif = document.querySelector("img")
 
 sportsBtn.addEventListener("click",getSports)
 continentsBtn.addEventListener("click",getContinents)
+booksBtn.addEventListener("click",getBooks)
 
 function getSports(e){
+	hideAll()
+	gif.style.display = "block";
 	e.preventDefault()
-	showViews("#sport-view")
 	let xml2 = new XMLHttpRequest()
 xml2.open("get","https://mysafeinfo.com/api/data?list=teamlistus&format=json&case=default")
 xml2.onreadystatechange = function(){
 	if (xml2.readyState == 4 && xml2.status == 200) {
 		createSports(JSON.parse(xml2.responseText))
+	showViews("#sport-view")
+
 	}
 }
 xml2.send()
 }
 function getContinents(e){
+	hideAll()
+	gif.style.display = "block";
 	e.preventDefault()
-	showViews("#continents-view")
 	let xml3 = new XMLHttpRequest()
 xml3.open("get","https://mysafeinfo.com/api/data?list=continents&format=json&case=default")
 xml3.onreadystatechange = function(){
 	if (xml3.readyState == 4 && xml3.status == 200) {
 		createContinents(JSON.parse(xml3.responseText))
+	showViews("#continents-view")
 	}
 }
 xml3.send()
 }
-
+function getBooks(e){
+	hideAll()
+	gif.style.display = "block";
+	// console.log(e)
+	if (e) {
+		e.preventDefault()
+	}
 let xml = new XMLHttpRequest()
 xml.open("get","https://mysafeinfo.com/api/data?list=bestnovels7&format=json&case=default")
 xml.onreadystatechange = function(){
 	if (xml.readyState == 4 && xml.status == 200) {
 		createBooks(JSON.parse(xml.responseText))
+	showViews("#book-view")
 	}
 }
 xml.send()
-
+}
+getBooks()
 function showViews(table){
 	console.log(table)
 	console.log(allViews)
-	for (var i = 0; i < allViews.length; i++) {
-		allViews[i].style.display = "none";
-	}
+	gif.style.display = "none";
 	document.querySelector(table).style.display = "block"
 }
 
@@ -94,10 +107,17 @@ function createContinents(continents){
 		<tr>
 		<td>${continents[i].Name}</td>
 		<td>${continents[i].Population}</td>
-		<td>${continents[i].AreaKM}</td>
+		<td>${continents[i].AreaKm}</td>
 		<td>${continents[i].PctGlobalLand}</td>
 		</tr>
 		`
 	}
 	continentsTable.innerHTML = text;
+}
+console.log("git")
+
+function hideAll(){
+	for (var i = 0; i < allViews.length; i++) {
+		allViews[i].style.display = "none";
+	}
 }

@@ -4,3 +4,14 @@
 #continents-view {
 	display: none;	
 }
+.container	{
+	text-align: center;
+	/*background-color: black;*/
+}
+img {
+	display: block;
+	margin: 0 auto;
+}
+#book-view{
+	display: none;
+}
